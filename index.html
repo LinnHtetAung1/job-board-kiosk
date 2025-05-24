@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, height=1920, initial-scale=1, user-scalable=no, maximum-scale=1"/>
+  <title>Kiosk Job Board</title>
+  <link rel="icon" href="logo.png" />
+  <!-- SheetJS for Excel import/export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+  <!-- QRCode.js for QR generation -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- idb-keyval for IndexedDB (optional, fallback: localStorage) -->
+  <script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/idb-keyval-iife.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Sticky Header -->
+  <header id="app-header">
+    <div id="datetime"></div>
+    <div id="logo-area" tabindex="0">
+      <img id="logo-img" src="logo.png" alt="Logo" />
+    </div>
+    <button id="fullscreen-btn" title="Enter Full Screen">
+      <svg width="48" height="48" fill="#fff"><rect x="8" y="8" width="32" height="32" rx="7" stroke="#004FED" stroke-width="4" fill="none"/></svg>
+    </button>
+  </header>
+
+  <!-- Filter Bar -->
+  <aside id="filter-bar">
+    <select id="filter-industry"><option value="">All Industries</option></select>
+    <select id="filter-title"><option value="">All Titles</option></select>
+    <select id="filter-location"><option value="">All Locations</option></select>
+    <select id="filter-gender"><option value="">All Genders</option></select>
+    <input id="search-box" type="search" placeholder="Search..." autocomplete="off"/>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main id="job-listings"></main>
+
+  <!-- Job Detail Modal -->
+  <section id="job-detail-modal" class="modal hidden" tabindex="-1">
+    <div class="modal-content">
+      <button class="close-btn" id="close-detail">&larr; Back</button>
+      <div id="job-detail"></div>
+    </div>
+  </section>
+
+  <!-- Admin Modal (PIN protected) -->
+  <section id="admin-modal" class="modal hidden" tabindex="-1">
+    <div class="modal-content admin">
+      <button class="close-btn" id="close-admin">&times;</button>
+      <div id="admin-login" class="admin-section">
+        <h2>Admin Login</h2>
+        <input id="admin-pin" type="password" maxlength="8" placeholder="Enter PIN" autofocus/>
+        <button id="admin-login-btn">Login</button>
+        <div id="admin-login-error"></div>
+      </div>
+      <div id="admin-panel" class="admin-section hidden">
+        <h2>Admin Panel</h2>
+        <label>Upload Jobs Excel (.xlsx): <input id="excel-upload" type="file" accept=".xls,.xlsx"/></label>
+        <button id="export-jobs">Export Jobs to Excel</button>
+        <label>Set Logo Image: <input id="logo-upload" type="file" accept="image/*"/></label>
+        <div id="admin-upload-log"></div>
+        <button id="admin-logout">Logout</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Touch keyboard (optional, can be hidden) -->
+  <div id="touch-keyboard" class="hidden"></div>
+
+  <footer id="app-footer">
+    <span>&copy; <span id="year"></span> Job Board Kiosk</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
